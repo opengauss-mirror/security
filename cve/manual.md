@@ -41,7 +41,7 @@ issue分析注意事项
     | 已分析 | openGaussVector | AV:A/AC:C...           |
     | 已分析 | 受影响的版本         | 1.0.0:受影响 |
     
-     **issue责任人在关闭issue前请查看模板中nvd评分和opengGuass评分是否一致，存在问题请在issue评论区重新填写，在关闭issue** 
+     **在关闭issue前，issue责任人请查看模板中nvd评分和openGuass评分是否一致，存在问题请在issue评论区重新填写** 
   
  ### 审核员操作说明
    - 安全委员会对issue处理人填写完整的issue和已关联pr(受影响的分支)可在issue的评论区回复如下指令
