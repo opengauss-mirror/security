@@ -1,7 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
 - [1.代码风格](#1%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC)
   - [1.1 命名](#11-%E5%91%BD%E5%90%8D)
       - [NAM.01 使用统一的命名风格](#nam01-%E4%BD%BF%E7%94%A8%E7%BB%9F%E4%B8%80%E7%9A%84%E5%91%BD%E5%90%8D%E9%A3%8E%E6%A0%BC)
@@ -118,7 +114,7 @@
     - [AST.01 避免在代码中直接使用assert()](#ast01-%E9%81%BF%E5%85%8D%E5%9C%A8%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8assert)
     - [AST.02 禁止用断言检测程序在运行期间可能导致的错误，可能发生的错误要用错误处理代码来处理](#ast02-%E7%A6%81%E6%AD%A2%E7%94%A8%E6%96%AD%E8%A8%80%E6%A3%80%E6%B5%8B%E7%A8%8B%E5%BA%8F%E5%9C%A8%E8%BF%90%E8%A1%8C%E6%9C%9F%E9%97%B4%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E7%9A%84%E9%94%99%E8%AF%AF%E5%8F%AF%E8%83%BD%E5%8F%91%E7%94%9F%E7%9A%84%E9%94%99%E8%AF%AF%E8%A6%81%E7%94%A8%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%BB%A3%E7%A0%81%E6%9D%A5%E5%A4%84%E7%90%86)
     - [AST.03 禁止在断言内改变运行环境](#ast03-%E7%A6%81%E6%AD%A2%E5%9C%A8%E6%96%AD%E8%A8%80%E5%86%85%E6%94%B9%E5%8F%98%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83)
-    - [AST.04 一个断言只用于检查一个错误](#ast04-%E4%B8%80%E4%B8%AA%E6%96%AD%E8%A8%80%E5%8F%AA%E7%94%A8%E4%BA%8E%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF)
+    - [AST.04 一个断言只用于检查一个条件](#ast04-%E4%B8%80%E4%B8%AA%E6%96%AD%E8%A8%80%E5%8F%AA%E7%94%A8%E4%BA%8E%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF)
   - [2.13 函数设计](#213-%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1)
     - [2.13.1 输入校验](#2131-%E8%BE%93%E5%85%A5%E6%A0%A1%E9%AA%8C)
       - [FUD.01 对所有外部数据进行合法性检查](#fud01-%E5%AF%B9%E6%89%80%E6%9C%89%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E5%90%88%E6%B3%95%E6%80%A7%E6%A3%80%E6%9F%A5)
@@ -1710,7 +1706,8 @@ C标准库，操作系统库，平台库，项目公共库，自己其他的依�
 ## 2.3 数据类型
 
 
-
+**【备注】**
+社区已有的数据类型有：数值类型、货币类型、布尔类型、字符类型、二进制类型、日期/时间类型、几何类型、网络地址类型、位串类型、文本搜索类型、UUID类型、JSON类型、对象标识符类型、伪类型、列存表支持的数据类型（详情请参见开发者指南数据类型章节）。
 
 ### TYP.01 不要重复定义基础类型
 
@@ -5372,7 +5369,7 @@ ASSERT(close(fd) == 0); // fd被关闭
 
 
 
-### AST.04 一个断言只用于检查一个错误
+### AST.04 一个断言只用于检查一个条件
 
 **【描述】**
 为了更加准确地发现错误的位置，每一条断言只校验一个错误。
@@ -5415,12 +5412,7 @@ int Foo(int *array, size_t size)
 
 
 
-### 2.13.1 输入校验
-
-
-
-
-#### FUD.01 对所有外部数据进行合法性检查
+### FUD.01 对所有外部数据进行合法性检查
 
 **【描述】**
 外部数据的来源包括但不限于：网络、用户输入、命令行、文件（包括程序的配置文件）、环境变量、用户态数据（对于内核程序）、进程间通信（包括管道、消息、共享内存、socket、RPC等，特别需要注意的是设备内部不同单板间通讯也属于进程间通信）、API参数、全局变量。
@@ -8199,55 +8191,97 @@ Linux下的/tmp目录是一个所有用户都可以访问的共享目录，不�
 
 ### MEM.01 禁止直接使用malloc申请内存，所以内存申请都需要通过palloc接口从内存上下文申请（工具除外）
 
+**【正例】**
+```c
+char* Buffer = (char*)palloc(BUFFER_SIZE);
+```
+
+**【反例】**
+```c
+char* Buffer = (char*)malloc(BUFFER_SIZE);
+```
 
 
+### MEM.02 使用palloc申请内存时，确认通过MemoryContextSwitchTo切换到正确的内存上下文
 
-
-### MEM.02 使用palloc申请内存时，确认通过MemoryContextSwitchTo切换到正确的内存上下文下
-
+**【正例】**
+```c
+MemoryContext oldContext = MemoryContextSwitchTo(u_sess->cache_mem_cxt);
+char* Buffer = (char*)palloc(BUFFER_SIZE);
+...
+(void)MemoryContextSwitchTo(oldContext);
+```
 
 
 
 
 ### MEM.03 禁止直接从头TopMemoryContext（g_instance.instance_context，t_thrd.top_mem_cxt，u_sess->top_mem_cxt）上申请内存
 
-
-
+**【反例】**
+```c
+MemoryContext oldContext = MemoryContextSwitchTo(u_sess->top_mem_cxt);
+char* Buffer = (char*)palloc(BUFFER_SIZE);
+...
+(void)MemoryContextSwitchTo(oldContext);
+```
 
 
 ### MEM.04 通过palloc申请的连续内存不能大于1GB，若超过1GB，请使用palloc_huge接口申请内存
 
-
-
+**【正例】**
+```c
+g_instance.ckpt_cxt_ctl->dirty_page_queue = (DirtyPageQueueSlot *)palloc_huge(CurrentMemoryContext, queue_mem_size);
+```
 
 
 ### MEM.05 u_sess->top_mem_cxt及其子内存上下文上申请的内存，禁止通过t_thrd下的变量引用
 
-
+**【反例】**
+```c
+MemoryContext oldContext = MemoryContextSwitchTo(u_sess->cache_mem_cxt);
+t_thrd.log_cxt.plog_md_read_entry = (char*)palloc0(PLOG_ENTRY_MAX_SIZE);
+...
+(void)MemoryContextSwitchTo(oldContext);
+```
 
 
 
 ### MEM.06 t_thrd.top_mem_cxt及其子内存上下文上申请的内存，禁止通过u_sess下的变量引用
 
-
-
+**【反例】**
+```c
+u_sess->storage_cxt.LocalBufferDescriptors = (BufferDesc*)MemoryContextAllocZero(THREAD_GET_MEM_CXT_GROUP(MEMORY_CONTEXT_STORAGE), (unsigned int)nbufs * sizeof(BufferDesc));
+```
 
 
 ### MEM.07 申请的内存需要通过pfree，MemoryContextDelete，MemoryContextReset接口及时释放
 
-
+**【正例】**
+```c
+MemoryContext oldContext = MemoryContextSwitchTo(u_sess->cache_mem_cxt);
+char* Buffer = (char*)palloc(BUFFER_SIZE);
+...
+(void)MemoryContextSwitchTo(oldContext);
+...
+pfree(Buffer);
+//or
+MemoryContextDelete(top_transaction_mem_cxt);
+```
 
 
 
 ### MEM.08 如果需要使用类，需要继承BaseObject类，创建对象是通过接口 New(ContextName) ClassName(..)
 
-
-
-
-
-### MEM.09 禁止使用c++ STL模板库
-
-
+**【正例】**
+```c
+New(ContextName) ClassName(..)
+class ThreadPoolListener : public BaseObject {
+...
+}
+m_listener = New(CurrentMemoryContext) ThreadPoolListener(this);
+...
+delete m_listener;
+```
 
 
 
@@ -8365,8 +8399,14 @@ catch(std::bad_alloc)
 }
 ```
 
+### C++.08 禁止使用c++ STL模板库
 
-
+**【反例】**
+```c
+Map<int, int> indexMap;
+indexMap[1]=2;
+...
+```
 
 ## 2.18 其它
 
