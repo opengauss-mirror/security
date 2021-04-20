@@ -1,7 +1,7 @@
 ## issue分析说明
 
 ### issue分析触发流程图
-<img src="./触发issue流程图.png" />
+<img src="./issue_flow_chart.png" />
 
 #### issue 分析评论流程
  
