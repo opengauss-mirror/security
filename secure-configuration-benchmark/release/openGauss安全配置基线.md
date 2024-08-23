@@ -181,7 +181,7 @@ OPENGAUSS.O_6.G_1.R_4
 执行如下SQL语句检查是否存在不限制连接数的数据库：
 
 ```sql
-SELECT datname FROM pg_database WHERE datistemplate = false AND datconnlimit = -1;
+SELECT datname FROM pg_database WHERE datistemplate = false AND (datconnlimit = -1 OR datconnlimit > 1024);
 ```
 
 **修复方法:**
@@ -727,7 +727,7 @@ OPENGAUSS.O_6.G_2.R_2
 执行如下 shell 命令，如果返回 `${GAUSSHOME}/share` 目录则失败。
 
 ```bash
-find ${GAUSSHOME}/share -prune -type d \( -perm -g=w -o -perm -o=w \) -exec ls -ld {} \;
+find ${GAUSSHOME}/share -prune -perm /g=rwx,o=rwx
 ```
 
 **修复方法：**
