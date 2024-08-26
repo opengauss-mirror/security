@@ -30,13 +30,13 @@ OPENGAUSS.O_6.G_6.R_12
 
 **检查方法：**
 
-检查`audit_file_remain_threshold`参数值配置，通常建议配置为默认值1024。
+检查`audit_file_remain_threshold`参数值配置，通常建议配置为默认值1048576。
 
 ```sql
 openGauss=# show audit_file_remain_threshold;
  audit_file_remain_threshold
 -----------------------------
- 1024
+1048576
 (1 row)
 ```
 

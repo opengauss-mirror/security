@@ -20,29 +20,29 @@ OPENGAUSS.O_6.G_6.R_6
 
 **规则背景说明：**
 
-参数`audit_system_object`决定是否对数据库对象的CREATE、DROP、ALTER操作记录审计日志。这些数据库对象包括DATABASE、USER、SCHEMA、TABLE等。该参数的值由20个二进制位的组合求出，每个二进制位代表openGauss Kernel中的一类数据库对象。如果某个二进制位取值为0，则不审计对应数据库对象的CREATE、DROP、ALTER操作；如果取值为1，则审计这些操作。具体每个二进制位代表的审计对象请参考openGauss的官方文档中对`audit_system_object`参数的说明。
+参数`audit_system_object`决定是否对数据库对象的CREATE、DROP、ALTER操作记录审计日志。这些数据库对象包括DATABASE、USER、SCHEMA、TABLE等。该参数的值由28个二进制位的组合求出，这28个二进制位分别代表openGauss的26类数据库对象（包含两个保留位）。如果对应的二进制位取值为0，表示不审计对应的数据库对象的CREATE、DROP、ALTER操作；取值为1，表示审计对应的数据库对象的CREATE、DROP、ALTER操作。这26个二进制位代表的具体审计内容请参见openGauss的官方文档中对`audit_system_object`参数的说明。
 
 **影响：**
 无
 
 **检查方法：**
 
-检查`audit_system_object`参数值配置，如果参数值小于默认值12295则失败。
+检查`audit_system_object`参数值配置，如果参数值小于默认值67121159则失败。
 
 ```sql
 openGauss=# show audit_system_object;
  audit_system_object
 ---------------------
- 12295
+67121159
 (1 row)
 ```
 
 **修复方法：**
 
-参数`audit_system_object`参数值设置为12295，表示对DATABASE、SCHEMA、USER、DATA SOURCE、NODE GROUP等数据库对象的DDL操作的审计。用户可根据业务需要开启对更多数据库对象DDL操作的审计。
+参数`audit_system_object`参数值设置为67121159，表示只对DATABASE、SCHEMA、USER、DATA SOURCE、SQL PATCH这五类数据库对象的CREATE、ALTER、DROP操作进行审计。用户可根据业务需要开启对更多数据库对象DDL操作的审计。
 
 ```bash
-gs_guc reload -Z datanode -N all -I all -c "audit_system_object = 12295"
+gs_guc reload -Z datanode -N all -I all -c "audit_system_object = 67121159"
 ```
 
 **参考来源：**

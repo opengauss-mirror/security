@@ -2440,29 +2440,29 @@ OPENGAUSS.O_6.G_6.R_6
 
 **规则背景说明：**
 
-参数`audit_system_object`决定是否对数据库对象的CREATE、DROP、ALTER操作记录审计日志。这些数据库对象包括DATABASE、USER、SCHEMA、TABLE等。该参数的值由20个二进制位的组合求出，每个二进制位代表openGauss Kernel中的一类数据库对象。如果某个二进制位取值为0，则不审计对应数据库对象的CREATE、DROP、ALTER操作；如果取值为1，则审计这些操作。具体每个二进制位代表的审计对象请参考openGauss的官方文档中对`audit_system_object`参数的说明。
+参数`audit_system_object`决定是否对数据库对象的CREATE、DROP、ALTER操作记录审计日志。这些数据库对象包括DATABASE、USER、SCHEMA、TABLE等。该参数的值由28个二进制位的组合求出，这28个二进制位分别代表openGauss的26类数据库对象（包含两个保留位）。如果对应的二进制位取值为0，表示不审计对应的数据库对象的CREATE、DROP、ALTER操作；取值为1，表示审计对应的数据库对象的CREATE、DROP、ALTER操作。这26个二进制位代表的具体审计内容请参见openGauss的官方文档中对`audit_system_object`参数的说明。
 
 **影响：**
 无
 
 **检查方法：**
 
-检查`audit_system_object`参数值配置，如果参数值小于默认值12295则失败。
+检查`audit_system_object`参数值配置，如果参数值小于默认值67121159则失败。
 
 ```sql
 openGauss=# show audit_system_object;
  audit_system_object
 ---------------------
- 12295
+67121159
 (1 row)
 ```
 
 **修复方法：**
 
-参数`audit_system_object`参数值设置为12295，表示对DATABASE、SCHEMA、USER、DATA SOURCE、NODE GROUP等数据库对象的DDL操作的审计。用户可根据业务需要开启对更多数据库对象DDL操作的审计。
+参数`audit_system_object`参数值设置为67121159，表示只对DATABASE、SCHEMA、USER、DATA SOURCE、SQL PATCH这五类数据库对象的CREATE、ALTER、DROP操作进行审计。用户可根据业务需要开启对更多数据库对象DDL操作的审计。
 
 ```bash
-gs_guc reload -Z datanode -N all -I all -c "audit_system_object = 12295"
+gs_guc reload -Z datanode -N all -I all -c "audit_system_object = 67121159"
 ```
 
 **参考来源：**
@@ -2758,13 +2758,13 @@ OPENGAUSS.O_6.G_6.R_12
 
 **检查方法：**
 
-检查`audit_file_remain_threshold`参数值配置，通常建议配置为默认值1024。
+检查`audit_file_remain_threshold`参数值配置，通常建议配置为默认值1048576。
 
 ```sql
 openGauss=# show audit_file_remain_threshold;
  audit_file_remain_threshold
 -----------------------------
- 1024
+ 1048576
 (1 row)
 ```
 
@@ -3608,7 +3608,7 @@ OPENGAUSS.O_6.G_8.R_1
 
 **规则背景说明：**
 
-WAL（Write Ahead Log）即预写式日志，是数据库用于恢复事务持久性的一种机制。`wal_level`决定了写入WAL的信息量。为了在备机上开启只读查询，`wal_level`需要在主机上设置成`hot_standby`，并且备机设置`hot_standby`参数为`on`。对于分布式环境，不支持设置`hot_standby`为`off`，因此`wal_level`不可设置为`archive`或`minimal`，否则数据库将无法启动。建议设置`wal_level`参数为默认值`hot_standby`。
+WAL（Write Ahead Log）即预写式日志，是数据库用于恢复事务持久性的一种机制。`wal_level`决定了写入WAL的信息量。为了在备机上开启只读查询，`wal_level`需要在主机上设置成`hot_standby`，并且备机设置`hot_standby`参数为`on`。
 
 **影响：**
 无
