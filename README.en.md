@@ -8,10 +8,10 @@ security repository is used by SIG Security team to store documents related to s
 
 #### SIG Security Member
 
-+ Jinwei Zhu[[@zhu_jinwei](https://gitee.com/zhu_jinwei)]
++ Qijun Chen[[@Endfromhere](https://gitcode.com/Endfromhere)]
++ Hongbo Jiang[[@hw_hbj](https://gitcode.com/hw_hbj)]
 + Liang Guo[[@blueloveki](https://gitee.com/blueloveki)]
-+ Jianfeng Li[[@jianfenglee](https://gitee.com/jianfenglee)]
-+ Yaozhong Zhang[[@buter](https://gitee.com/buter)]
++ Jianfeng Li[[@jianfenglee](https://gitcode.com/jianfenglee)]
 + Zheli Liu[[@liuzheli](https://gitee.com/liuzheli)]
 + shay.akirav[[@shay-akirav](https://gitee.com/shay-akirav)]
 
