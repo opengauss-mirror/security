@@ -9,9 +9,11 @@ security repository is used by SIG Security team to store documents related to s
 #### SIG Security Member
 
 + Qijun Chen[[@Endfromhere](https://gitcode.com/Endfromhere)]
-+ Hongbo Jiang[[@hw_hbj](https://gitcode.com/hw_hbj)]
++ Cong Zhou[[@congzhou2603](https://gitcode.com/congzhou2603)]
 + Liang Guo[[@blueloveki](https://gitee.com/blueloveki)]
 + Jianfeng Li[[@jianfenglee](https://gitcode.com/jianfenglee)]
++ Shuixin Song[[@muyulinzhong](https://gitcode.com/muyulinzhong)]
++ Xue Zheng[[@shirley_zhengxue](https://gitcode.com/shirley_zhengxue)]
 + Zheli Liu[[@liuzheli](https://gitee.com/liuzheli)]
 + shay.akirav[[@shay-akirav](https://gitee.com/shay-akirav)]
 
