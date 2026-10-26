@@ -2,9 +2,9 @@
 
 #### Description
 
-The SIG Security team of openGauss community is responsible for receiving and responding to openGauss community security problem reports, providing community security guidance, and carrying out security governance.
+The SIG Security team of openGauss community is responsible for receiving and responding to openGauss community security problem reports, providing community security guidance, and carrying out security governance. The team also reviews license compliance and the admission of third-party open source components.
 
-security repository is used by SIG Security team to store documents related to security process and security guidance.
+security repository is used by SIG Security team to store documents related to security processes, security guidance, and compliance rules.
 
 #### SIG Security Member
 
